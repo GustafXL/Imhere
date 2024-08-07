@@ -45,6 +45,12 @@ export const styles = StyleSheet.create({
     marginTop: 36,
     marginBottom: 42
   },
+  formUpdate: {
+    width: "100%",
+    flexDirection: 'row',
+    marginTop: 5,
+    marginBottom: 42
+  },
   listEmptyText: {
     color: "#FFF",
     fontSize: 14,

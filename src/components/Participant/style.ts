@@ -27,4 +27,17 @@ export const styles = StyleSheet.create({
         color: "#FFF",
         fontSize: 24
     },
+    buttonEdit: {
+        color: "#fff",
+        fontSize: 16
+    },
+    boxEdit: {
+        width: 56,
+        height: 56,
+        borderRadius: 5,
+        marginRight: 5,
+        backgroundColor: "#0581F5",
+        alignItems: "center",
+        justifyContent: "center"
+    },
 });

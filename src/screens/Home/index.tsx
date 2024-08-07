@@ -5,10 +5,15 @@ import { styles } from "./styles"
 
 import { Participant } from "../../components/Participant"
 import { useState } from "react"
+import { Check } from "lucide-react-native"
+
+type ParticipantsProps = string[]
 
 export default function Home() {
-  const [participants, setParticipants] = useState<string[]>([])
+  const [participants, setParticipants] = useState<ParticipantsProps>([])
   const [participantName, setParticipantName] = useState("")
+  const [edit, setEdit] = useState(false)
+  const [nameEdit, setNameEdit] = useState("")
 
   function handleParticipantAdd() {
     if(participants.includes(participantName)) {
@@ -18,6 +23,13 @@ export default function Home() {
     setParticipants((prevState) => [...prevState, participantName])
     setParticipantName("")
   }
+
+  function handleParticipantUpdate(index: number) {
+    const update: ParticipantsProps = [...participants]
+
+    update[index] = nameEdit
+    setParticipants(update)
+  } 
 
   function handleParticipantRemove(name: string) {
 
@@ -58,8 +70,23 @@ export default function Home() {
       <FlatList 
         data={participants} 
         keyExtractor={item => item}
-        renderItem={({ item }) => (
-          <Participant name={item} onRemove={() => handleParticipantRemove(item)} key={item}/>
+        renderItem={({ item, index }) => (
+          <View>
+            <Participant name={item} onRemove={() => handleParticipantRemove(item)} onEdit={() => setEdit(!edit)} key={item}/>
+            {edit && participants[index].includes(item) ? 
+              (
+                <View style={styles.formUpdate}>
+                  <TextInput style={styles.input} placeholder="Atualizar participante"
+                  placeholderTextColor="#6B6B6B" onChangeText={setNameEdit}/>
+                  <TouchableOpacity style={styles.button} onPress={() => handleParticipantUpdate(index)}>
+                    <Text style={styles.buttonText}>
+                      <Check color="white" size={20}/>
+                    </Text>
+                  </TouchableOpacity>
+                </View>
+              ) : ''
+            }
+          </View>
         )}
         ListEmptyComponent={() => (
           <Text style={styles.listEmptyText}>
